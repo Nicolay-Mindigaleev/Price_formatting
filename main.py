@@ -15,9 +15,26 @@ def format_number(value: (int)) -> str:
         return f"{value} ₽"
     formatted = f"{num:.1f}".rstrip('0').rstrip('.')
     return formatted + suffix
-def format_price(price_from: int | None = None, price_to: int | None = None) -> str:
+def validation(price_from: int | None, price_to: int | None) -> int | None:
+    #Zero values
+    if price_from == 0:
+        price_from = None
+    if price_to == 0:
+        price_to = None
+    #Negative values
+    if price_from < 0 or price_to < 0:
+        raise ValueError("Value must be a positive")
+    #non-Sorted values
+    if price_from > price_to:
+        buffer = price_from
+        price_from = price_to
+        price_to = buffer
+    #None values
     if price_from is None and price_to is None:
         raise ValueError("At least one value is required")
+    return price_from, price_to
+def format_price(price_from: int | None = None, price_to: int | None = None) -> str:
+    price_from, price_to = validation(price_from, price_to)
     range_of_price = ""      
     if price_from is not None and price_to is None:
         formated_price_from = format_number(price_from)
