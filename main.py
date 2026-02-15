@@ -47,7 +47,4 @@ def format_price(price_from: int | None = None, price_to: int | None = None) -> 
         formated_price_to = format_number(price_to)
         range_of_price += formated_price_from + " - " + formated_price_to
     return range_of_price.replace(".",",")
-a = 2100
-b = 300_000
-print(f"{format_price(price_from= a, price_to= b)}")
         
